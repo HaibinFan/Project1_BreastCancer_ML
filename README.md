@@ -69,11 +69,28 @@ PROJECT1_BREASTCANCER_ML/
 
 ---
 
-## Installation
+## Setup
 
-Install dependencies:
+Before running the project, install the required Python dependencies.
+
+### (Optional) Create a virtual environment:
+
+```bash
+python -m venv venv
+source venv/bin/activate  # macOS/Linux
+venv\Scripts\activate     # Windows 
+```
+
+### Install Required Dependencies
 
 ```bash
 pip install -r requirements.txt
+```
 
-Run Training Script ：python src/train.py
+## Run Instructions
+
+After setup is complete, run the training script:
+
+```bash
+python src/train.py
+```
