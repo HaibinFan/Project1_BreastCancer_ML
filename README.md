@@ -14,11 +14,13 @@ Early detection of malignant breast tumors is critical for improving patient sur
 
 ## Dataset
 
-- **Source:** Breast Cancer Wisconsin (Diagnostic) dataset (UCI / OpenML)
+- **Source:** Breast Cancer Wisconsin (Diagnostic) dataset — [UCI / OpenML](https://www.openml.org/d/1510)
 - **Samples:** 569
-- **Features:** 30 numerical features derived from imaging data
+- **Features:** 30 numerical features derived from imaging data (radius, texture, perimeter, area, smoothness, etc.)
 - **Target:** 0 = Malignant, 1 = Benign
+- **License:** Public domain, freely available for research use
 - No missing values were observed
+- Dataset is loaded directly via `sklearn.datasets.load_breast_cancer()`, no manual download required
 
 ---
 
@@ -51,14 +53,14 @@ All models were tuned using GridSearchCV with 5-fold cross-validation, optimizin
 PROJECT1_BREASTCANCER_ML/
 │
 ├── models/
-│   └── log_reg_breast_cancer.pkl
+│   └── log_reg_breast_cancer.pkl       # Saved trained model
 │
 ├── notebooks/
-│   ├── Breast_Cancer_Tumor_Classification.ipynb
-│   └── Demo.ipynb
+│   ├── Breast_Cancer_Tumor_Classification.ipynb    # Full analysis and model training
+│   └── Model_Demo.ipynb                            # Load model and run inference
 │
 ├── src/
-│   └── train.py
+│   └── train.py                        # Standalone training script
 │
 ├── requirements.txt
 └── README.md
@@ -67,6 +69,8 @@ PROJECT1_BREASTCANCER_ML/
 ---
 
 ## Setup
+
+- **Python version:** 3.13.5
 
 ### (Optional) Create a virtual environment:
 ```bash
@@ -82,13 +86,39 @@ pip install -r requirements.txt
 
 ---
 
-## Run Instructions
+## Quick Start
 
 To retrain the model and save it:
 ```bash
 python src/train.py
 ```
 
-To see the model in action, open `notebooks/Model Demo.ipynb` and run all cells.
+To see the model in action, open `notebooks/Model_Demo.ipynb` and run all cells.
 
-For the full analysis, open `notebooks/Breast Cancer Tumor Classification.ipynb`.
+For the full analysis and EDA, open `notebooks/Breast_Cancer_Tumor_Classification.ipynb` and run all cells.
+
+> **Expected runtime:** ~2 minutes for the full classification notebook on a standard machine.
+
+---
+
+## Authors and Contributions
+
+| Name | Role |
+|------|------|
+| Gael Garcia | Model development, hyperparameter tuning, pipeline implementation |
+| Haibin Fan | Exploratory data analysis, feature analysis, visualizations |
+| Lauren Plummer | Evaluation, results analysis, documentation |
+
+---
+
+## Dependencies
+
+Key packages and versions:
+
+| Package | Version |
+|---------|---------|
+| Python | 3.13.5 |
+| scikit-learn | 1.8.0 |
+| pandas | 3.0.1 |
+| matplotlib | 3.10.8 |
+| seaborn | 0.13.2 |

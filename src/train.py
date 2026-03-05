@@ -7,6 +7,12 @@ import pickle
 import os
 
 def main():
+    """
+    Trains a Logistic Regression pipeline on the Breast Cancer Wisconsin dataset
+    using the best hyperparameters found during GridSearchCV tuning, evaluates
+    performance on a held-out test set, and saves the trained model to the
+    models directory as a pickle file.
+    """
     # load dataset
     data = load_breast_cancer(as_frame=True)
     df = data.frame
@@ -38,7 +44,7 @@ def main():
     # save model to models folder
     models_dir = os.path.join(os.path.dirname(__file__), '..', 'models')
     os.makedirs(models_dir, exist_ok=True)
-    
+
     model_path = os.path.join(models_dir, 'log_reg_breast_cancer.pkl')
     with open(model_path, 'wb') as f:
         pickle.dump(model, f)
