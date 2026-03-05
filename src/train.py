@@ -1,41 +1,49 @@
 from sklearn.datasets import load_breast_cancer
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
-import numpy as np
+import pickle
+import os
 
 def main():
-    # Load dataset
+    # load dataset
     data = load_breast_cancer(as_frame=True)
     df = data.frame
 
     X = df.drop("target", axis=1)
     y = df["target"]
 
-    # Train-test split
+    # train-test split
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
+        X, y, test_size=0.2, random_state=42, stratify=y
     )
 
-    # Build pipeline
-    model = make_pipeline(
-        StandardScaler(),
-        LogisticRegression(max_iter=5000)
-    )
+    # build pipeline with best hyperparameters from tuning
+    model = Pipeline([
+        ('scaler', StandardScaler()),
+        ('classifier', LogisticRegression(
+            penalty='l2',
+            C=0.1,
+            class_weight='balanced',
+            solver='liblinear',
+            random_state=42
+        ))
+    ])
 
-    # Train
     model.fit(X_train, y_train)
 
-    # Evaluate
-    test_accuracy = model.score(X_test, y_test)
-    print("Test Accuracy:", test_accuracy)
+    print("Test Accuracy:", model.score(X_test, y_test))
 
-    # Cross-validation
-    cv_scores = cross_val_score(model, X, y, cv=5)
-    print("Cross-Validation Scores:", cv_scores)
-    print("Mean CV Accuracy:", np.mean(cv_scores))
+    # save model to models folder
+    models_dir = os.path.join(os.path.dirname(__file__), '..', 'models')
+    os.makedirs(models_dir, exist_ok=True)
+    
+    model_path = os.path.join(models_dir, 'log_reg_breast_cancer.pkl')
+    with open(model_path, 'wb') as f:
+        pickle.dump(model, f)
 
+    print("Model saved as models/log_reg_breast_cancer.pkl")
 
 if __name__ == "__main__":
     main()
